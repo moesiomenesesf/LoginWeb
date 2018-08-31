@@ -37,6 +37,36 @@ public class UsuarioArquivo {
         return true;
     }
     public boolean remover(String login) {
+        if(this.existeUsuario(login)){
+            List<Usuario> users = new ArrayList();
+            users.addAll(this.obterTodos());
+            Usuario user = new Usuario();
+            for(Usuario u: users){
+                
+                if(u.getLogin().equals(login)){
+                   
+                  user = u;
+                }
+            }
+            users.remove(user);
+            try {
+                FileWriter fw;
+                fw = new FileWriter("usuarios.txt", false);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.close();
+                fw.close();
+                for(Usuario u: users){
+                   inserir(u.getNome(), u.getLogin(), u.getSenha());
+                }   
+               
+                
+
+            } catch (Exception ex) {
+                System.out.println("erro");
+            }
+        }else{
+            System.out.println("Login não existe");
+        }
         return true;
     }
     public Usuario obterUsuario(String login) {
@@ -81,7 +111,6 @@ public class UsuarioArquivo {
                 usuario = br.readLine();
                 String[] tupla = usuario.split(";");
                 user.setNome(tupla[0]);
-                System.out.println(user.getNome());
                 user.setLogin(tupla[1]);
                 user.setSenha(tupla[2]);
                 listaUsuarios.add(user);
