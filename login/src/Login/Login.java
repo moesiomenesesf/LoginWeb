@@ -16,7 +16,7 @@ public class Login {
     public static void main(String[] args) {
         UsuarioArquivo arquivo = new UsuarioArquivo();
         List<Usuario> userlist = new ArrayList();
-        arquivo.remover("momozin");
+        arquivo.alterar("Tigrão", "Tigrãoooo", "kaka é gente boa");
         userlist.addAll(arquivo.obterTodos());
         for(Usuario i : userlist){
             System.out.println(i.getLogin());

@@ -34,6 +34,41 @@ public class UsuarioArquivo {
         return true;
     }
     public boolean alterar(String nome, String login, String senha) {
+        if(this.existeUsuario(login)){
+            List<Usuario> users = new ArrayList();
+            users.addAll(this.obterTodos());
+            Usuario user = new Usuario();
+            for(Usuario u: users){
+                
+                if(u.getLogin().equals(login) && u.getSenha().equals(senha)){
+                  user = u;
+                }
+            }
+            Usuario aux = new Usuario();
+            aux.setLogin(user.getLogin());
+            aux.setNome(nome);
+            aux.setSenha(user.getSenha());
+            users.remove(user);
+            try {
+                FileWriter fw;
+                fw = new FileWriter("usuarios.txt", false);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.close();
+                fw.close();
+                for(Usuario u: users){
+                   inserir(u.getNome(), u.getLogin(), u.getSenha());
+                }   
+                inserir(aux.getNome(), aux.getLogin(), aux.getSenha());
+                
+
+            } catch (Exception ex) {
+                System.out.println("erro");
+                return false;
+            }
+        }else{
+            System.out.println("Login não existe");
+            return false;
+        }
         return true;
     }
     public boolean remover(String login) {
@@ -44,7 +79,6 @@ public class UsuarioArquivo {
             for(Usuario u: users){
                 
                 if(u.getLogin().equals(login)){
-                   
                   user = u;
                 }
             }
@@ -63,9 +97,11 @@ public class UsuarioArquivo {
 
             } catch (Exception ex) {
                 System.out.println("erro");
+                return false;
             }
         }else{
             System.out.println("Login não existe");
+            return false;
         }
         return true;
     }
