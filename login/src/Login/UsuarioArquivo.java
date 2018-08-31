@@ -71,22 +71,23 @@ public class UsuarioArquivo {
     }
     public List<Usuario> obterTodos() {
         List<Usuario> listaUsuarios = new ArrayList<>();
-        Usuario user = new Usuario();
+        
         String usuario;
         try {
             FileReader fr = new FileReader("usuarios.txt");
             BufferedReader br = new BufferedReader(fr);
             while (br.ready()) {
+                Usuario user = new Usuario();
                 usuario = br.readLine();
                 String[] tupla = usuario.split(";");
                 user.setNome(tupla[0]);
+                System.out.println(user.getNome());
                 user.setLogin(tupla[1]);
                 user.setSenha(tupla[2]);
                 listaUsuarios.add(user);
-                for(Usuario i : listaUsuarios){
-                     System.out.println(i.getNome());
-                }
+                
             }
+            
             br.close();
             fr.close();
         }catch (Exception ex) {

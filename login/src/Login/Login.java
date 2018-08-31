@@ -5,6 +5,7 @@
  */
 package Login;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,9 +15,11 @@ import java.util.List;
 public class Login {
     public static void main(String[] args) {
         UsuarioArquivo arquivo = new UsuarioArquivo();
-        List<Usuario> user = arquivo.obterTodos();
-        for(int i=0; i<user.size(); i++){
-            System.out.println(user.get(i).getLogin());
+        List<Usuario> userlist = new ArrayList();
+        arquivo.inserir("Lucas Primo", "Tigrãoooo", "kaka é gente boa");
+        userlist.addAll(arquivo.obterTodos());
+        for(Usuario i : userlist){
+            System.out.println(i.getLogin());
         }
     }
 }
