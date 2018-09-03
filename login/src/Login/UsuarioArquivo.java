@@ -23,7 +23,7 @@ public class UsuarioArquivo {
                 FileWriter fw;
                 fw = new FileWriter("usuarios.txt", true);
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write(nome+";"+login+";"+senha);
+                bw.write(nome+";"+login.toLowerCase()+";"+senha);
                 bw.newLine();
                 bw.close();
                 fw.close();
@@ -34,13 +34,13 @@ public class UsuarioArquivo {
         return true;
     }
     public boolean alterar(String nome, String login, String senha) {
-        if(this.existeUsuario(login)){
+        if(this.existeUsuario(login.toLowerCase())){
             List<Usuario> users = new ArrayList();
             users.addAll(this.obterTodos());
             Usuario user = new Usuario();
             for(Usuario u: users){
                 
-                if(u.getLogin().equals(login) && u.getSenha().equals(senha)){
+                if(u.getLogin().equals(login.toLowerCase()) && u.getSenha().equals(senha)){
                   user = u;
                 }
             }
@@ -78,7 +78,7 @@ public class UsuarioArquivo {
             Usuario user = new Usuario();
             for(Usuario u: users){
                 
-                if(u.getLogin().equals(login)){
+                if(u.getLogin().equals(login.toLowerCase())){
                   user = u;
                 }
             }
@@ -115,7 +115,7 @@ public class UsuarioArquivo {
             while (br.ready()) {
                 usuario = br.readLine();
                 String[] tupla = usuario.split(";");
-                if(tupla[1].equals(login)){
+                if(tupla[1].equals(login.toLowerCase())){
                     user.setNome(tupla[0]);
                     user.setLogin(tupla[1]);
                     user.setSenha(tupla[2]);
@@ -152,7 +152,6 @@ public class UsuarioArquivo {
                 listaUsuarios.add(user);
                 
             }
-            
             br.close();
             fr.close();
         }catch (Exception ex) {
@@ -171,7 +170,7 @@ public class UsuarioArquivo {
              usuario = br.readLine();
              for(int i = 0; i<usuario.length(); i++){
                  String[] tupla = usuario.split(";");
-                 if(tupla[1].equals(login)){
+                 if(tupla[1].equals(login.toLowerCase())){
                      return true;
                  }
              }
